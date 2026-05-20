@@ -4,7 +4,6 @@ import React from 'react';
 const AllfacilitesPage = async() => {
     const res = await fetch("http://localhost:5000/all-facilities")
     const allFacilities = await res.json()
-    console.log(allFacilities);
     return (
         <div className='w-11/12 mx-auto'>
   <h1 className='font-semibold text-2xl text-center mt-5 mb-5'>All Facilities</h1>

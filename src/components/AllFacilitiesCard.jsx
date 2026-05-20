@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 
 const AllFacilitiesCard = ({allFacilitie}) => {
@@ -24,9 +25,9 @@ const AllFacilitiesCard = ({allFacilitie}) => {
     </div>
     <p className="text-sm text-gray-600 line-clamp-3">{description} </p>
     <div className="card-actions justify-center mt-2">
-      <button className="btn bg-[#00b562] border-none hover:bg-[#00994f] text-white">
+   <Link href={`/all-facilities/${_id}`}>   <button className="btn bg-[#00b562] border-none hover:bg-[#00994f] text-white">
         View Details
-      </button>
+      </button></Link>
     </div>
   </div>
 </div>
