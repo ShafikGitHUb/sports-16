@@ -2,6 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import logoimg from "@/assets/sports16.png"
 import Image from 'next/image';
+import NavLink from './NavLink';
 
 const Navbar = () => {
     return (
@@ -20,16 +21,16 @@ const Navbar = () => {
   </div>
   <div className="navbar-center hidden md:flex">
    <ul className="flex justify-center items-center gap-6 font-heading">
-     <Link href={"/"}>Home</Link>
-     <Link href={"/all-facilities"}>All Facilities</Link>
-     <Link href={"/my-bookings"}>My Bookings</Link>
-     <Link href={"/add-facility"}>Add Facility</Link>
-     <Link href={"/manage-facilities"}>Manage Facilities</Link>
+     <NavLink href="/">Home</NavLink>
+            <NavLink href="/all-facilities">All Facilities</NavLink>
+            <NavLink href="/my-bookings">My Bookings</NavLink>
+            <NavLink href="/add-facility">Add Facility</NavLink>
+            <NavLink href="/manage-facilities">Manage Facilities</NavLink>
       </ul>
   </div>
 
   <div className="navbar-end">
-  <Link href={"/login"}><button className="btn btn-ghost">Login</button></Link>
+ <NavLink href="/login" className="btn">Login</NavLink>
   <div className="dropdown dropdown-end md:hidden">
     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none"
@@ -43,14 +44,13 @@ const Navbar = () => {
       tabIndex={0}
       className="menu menu-sm dropdown-content bg-base-100 rounded-box z-2 mt-2 w-40 px-4 pt-4 pb-10 shadow gap-2"
     >
-    <Link href={"/"}>Home</Link>
-     <Link href={"/all-facilities"}>All Facilities</Link>
-     <Link href={"/my-bookings"}>My Bookings</Link>
-     <Link href={"/add-facility"}>Add Facility</Link>
-     <Link href={"/manage-facilities"}>Manage Facilities</Link>
+     <NavLink href="/">Home</NavLink>
+            <NavLink href="/all-facilities">All Facilities</NavLink>
+            <NavLink href="/my-bookings">My Bookings</NavLink>
+            <NavLink href="/add-facility">Add Facility</NavLink>
+            <NavLink href="/manage-facilities">Manage Facilities</NavLink>
     </ul>
   </div>
-
 </div>
 </div>
 </div>

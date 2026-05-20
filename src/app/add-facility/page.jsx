@@ -1,18 +1,37 @@
+"use client"
 import { Button, FieldError, Input, Label, ListBox, TextArea, TextField,Select, Card } from '@heroui/react';
 import React from 'react';
 
 const AddfacilityPage = () => {
+
+  //onsumbit form
+const onSubmit =async(e)=>{
+e.preventDefault()
+const formData = new FormData(e.currentTarget)
+const addFacility = Object.fromEntries(formData.entries())
+//data fetch with link post method add facility
+ const res = await fetch("http://localhost:5000/add-facility", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(addFacility),
+  });
+
+  const data = await res.json();
+};
+
     return (
          <div className='p-5 max-w-7xl mx-auto'>
             <Card className=''>
                    <h1 className='text-2xl font-semibold text-center border-b w-max mx-auto'>Add Facilities</h1>
-                  <form 
+                  <form onSubmit={onSubmit} 
             className="p-10 space-y-8 md:w-3xl mx-auto"
           >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
              
               <div className="md:col-span-2">
-                <TextField name="destinationName" isRequired>
+                <TextField name="facilityname" isRequired>
                   <Label>Facility Name</Label>
                   <Input placeholder="Facility Name" className="rounded-2xl" />
                   <FieldError />
@@ -59,6 +78,10 @@ const AddfacilityPage = () => {
           Badminton
           <ListBox.ItemIndicator />
         </ListBox.Item>
+        <ListBox.Item id="Tenis" textValue="Tenis">
+          Tenis
+          <ListBox.ItemIndicator />
+        </ListBox.Item>
 
       </ListBox>
     </Select.Popover>
@@ -93,7 +116,7 @@ const AddfacilityPage = () => {
 
 
 <div className="md:col-span-2">
-  <TextField name="Time" type="time" isRequired>
+  <TextField name="time" type="time" isRequired>
     <Label>Available Time</Label>
     <Input
       type="time"
@@ -124,8 +147,7 @@ const AddfacilityPage = () => {
               Add Facility
             </Button>
           </form>
-            </Card>
-          
+            </Card> 
         </div>
     );
 };
