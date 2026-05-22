@@ -6,16 +6,21 @@ import React, { useState } from 'react';
 
 const BookingCard = ({facilitiesDetails}) => {
      const {_id,facilityname,category,imageUrl,country,price,Time,description} = facilitiesDetails;
-    const [departureDate, setDepartureDate] = useState(null); 
+    const [departureDate, setDepartureDate] = useState(null);
+    // ADD TIME 
+    const [hours, setHours] = useState(1);
     const {data: session} = authClient.useSession();
     const user = session?.user;
     // console.log(user);
  const handleBooking = async()=>{
+  const totalPrice = price * hours;
      const bookingInformation = {
-      userId:user.id,
-      userName:user.name,
-      facilityId:_id,
-      departureDate: new Date (departureDate)
+         userId: user.id,
+    userName: user.name,
+    facilityId: _id,
+    departureDate: new Date(departureDate),
+    hours,
+    totalPrice: price * hours,
     }
  }
     return (
@@ -32,27 +37,33 @@ const BookingCard = ({facilitiesDetails}) => {
   </div>
 
   <div className="flex justify-between items-center border-t border-base-300/60 pt-2 mt-2">
-    <span className="text-sm font-medium text-success">Price:</span>
+    <span className="text-sm font-medium text-success">Price Per Hour:</span>
     <span className="text-lg font-extrabold text-success">${price}</span>
   </div>
 </div>
-<TextField className="w-full" name="username">
-      <Label>Name</Label>
-      <Input placeholder="Enter username" />
-    </TextField>
   <DateField onChange={setDepartureDate} className="w-full rounded-none" name="date">
       <Label>Date</Label>
       <DateField.Group>
         <DateField.Input>{(segment) => <DateField.Segment segment={segment} />}</DateField.Input>
       </DateField.Group>
     </DateField>
- <TimeField className="w-full" name="time">
-      <Label>Time</Label>
-      <TimeField.Group>
-        <TimeField.Input>{(segment) => <TimeField.Segment segment={segment} />}</TimeField.Input>
-      </TimeField.Group>
-    </TimeField>
-
+    <div className="space-y-2">
+  <Label>Hours</Label>
+  <Input
+    type="number"
+    min={1}
+    value={hours}
+    onChange={(e) => setHours(Number(e.target.value))}
+    className="w-full"
+    placeholder="Enter hours"
+  />
+</div>
+<div className="flex justify-between items-center border-t border-base-300/60 pt-2 mt-2">
+  <span className="text-sm font-medium text-success">Total Price:</span>
+  <span className="text-lg font-extrabold text-success">
+    ${price * hours}
+  </span>
+</div>
 <div className="relative flex py-2 items-center justify-center my-2">
   <div className="flex-grow border-t border-base-300"></div>
   <span className="flex-shrink mx-3 text-[10px] font-bold uppercase tracking-widest opacity-40">

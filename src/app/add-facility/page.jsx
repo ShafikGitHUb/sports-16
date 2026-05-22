@@ -9,13 +9,32 @@ const onSubmit =async(e)=>{
 e.preventDefault()
 const formData = new FormData(e.currentTarget)
 const addFacility = Object.fromEntries(formData.entries())
+const pricePerHour = Number(addFacility.price);
+
+// time
+const startTime = addFacility.startTime;
+const endTime = addFacility.endTime;
+
+if (new Date(`1970-01-01T${endTime}`) <= new Date(`1970-01-01T${startTime}`)) {
+  alert("End time must be greater than start time");
+  return;
+}
+
+const facilityData = {
+  ...addFacility,
+  pricePerHour,
+  startTime,
+  endTime,
+};
+
 //data fetch with link post method add facility
  const res = await fetch("http://localhost:5000/add-facility", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(addFacility),
+    // body: JSON.stringify(addFacility),
+    body: JSON.stringify(facilityData)
   });
 
   const data = await res.json();
@@ -105,11 +124,6 @@ const addFacility = Object.fromEntries(formData.entries())
                 <FieldError />
               </TextField>
 
-              
-
-              {/* price da defult set korte hobe */}
-
-
               <TextField name="price" type="number" isRequired>
                 <Label>Price Per hour (USD)</Label>
                 <Input
@@ -120,16 +134,31 @@ const addFacility = Object.fromEntries(formData.entries())
                 <FieldError />
               </TextField>
 
-{/* time fixed kore dea ucit */}
-
 <div className="md:col-span-2">
-  <TextField name="time" type="time" isRequired>
+  {/* <TextField name="time" type="time" isRequired>
     <Label>Available Time</Label>
     <Input
       type="time"
       className="rounded-2xl"
     />
 
+    <FieldError />
+  </TextField> */}
+   <TextField name="startTime" isRequired>
+    <Label>Start Time</Label>
+    <Input
+      type="time"
+      className="rounded-2xl"
+    />
+    <FieldError />
+  </TextField>
+
+  <TextField name="endTime" isRequired>
+    <Label>End Time</Label>
+    <Input
+      type="time"
+      className="rounded-2xl"
+    />
     <FieldError />
   </TextField>
 </div>
