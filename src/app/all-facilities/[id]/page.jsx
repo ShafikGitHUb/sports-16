@@ -1,3 +1,4 @@
+import BookingCard from "@/components/BookingCard";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -9,98 +10,10 @@ const AllFacilitesDetails = async({params}) => {
 return (
   <div className="hero bg-base-200 min-h-screen w-11/12 mx-auto my-6 rounded-3xl overflow-hidden shadow-sm">
     <div className="w-full max-w-6xl p-4 md:p-8 grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12 items-start">
-      
       {/* LEFT SIDE: Form */}
-      <div className="lg:col-span-2 w-full order-2 lg:order-1 flex justify-center lg:justify-start">
-        <div className="card bg-base-100 w-full max-w-md shrink-0 shadow-xl border border-base-300">
-          <div className="card-body gap-4 p-6 md:p-8">
-            <h3 className="text-xl font-bold text-base-content border-b pb-2 mb-2">Booking Information</h3>
-            
-            {/* Facility Name Input */}
-            <div className="form-control w-full">
-              <label className="label py-1">
-                <span className="label-text font-medium text-sm">Your Name</span>
-              </label>
-              <input 
-                type="text" 
-                placeholder="Enter your name" 
-                className="input input-bordered w-full focus:input-primary bg-base-50" 
-              />
-            </div>
-            <div className="form-control w-full">
-              <label className="label py-1">
-                <span className="label-text font-medium text-sm">Facility Name</span>
-              </label>
-              <input 
-                type="text" 
-                placeholder="Enter facility name" 
-                className="input input-bordered w-full focus:input-primary bg-base-50" 
-              />
-            </div>
-            <div className="form-control w-full">
-              <label className="label py-1">
-                <span className="label-text font-medium text-sm">Category</span>
-              </label>
-              <input 
-                type="text" 
-                placeholder="Enter category" 
-                className="input input-bordered w-full focus:input-primary bg-base-50" 
-              />
-            </div>
-            <div className="form-control w-full">
-              <label className="label py-1">
-                <span className="label-text font-medium text-sm">Country</span>
-              </label>
-              <input 
-                type="text" 
-                placeholder="Enter country name" 
-                className="input input-bordered w-full focus:input-primary bg-base-50" 
-              />
-            </div>
-            <div className="form-control w-full">
-              <label className="label py-1">
-                <span className="label-text font-medium text-sm">Price ($)</span>
-              </label>
-              <input 
-                type="number" 
-                placeholder="0.00" 
-                className="input input-bordered w-full focus:input-primary bg-base-50" 
-              />
-            </div>
-
-            <div className="form-control w-full">
-              <label className="label py-1">
-                <span className="label-text font-medium text-sm">Preferred Time</span>
-              </label>
-              <input 
-                type="time" 
-                className="input input-bordered w-full focus:input-primary bg-base-50" 
-              />
-            </div>
-            <button className="btn py-4 w-full badge badge-outline badge-primary hover:bg-primary hover:text-white transition-colors duration-200 cursor-pointer">
-              Book Now
-            </button>
-            <Link href={"/all-facilities"}> 
-  <div className="w-full py-4 badge badge-outline badge-primary hover:bg-primary hover:text-white transition-colors duration-200 cursor-pointer">
-    Cancel
-  </div>
-</Link>
-          </div>
-        </div>
-      </div>
-
+   <BookingCard facilitiesDetails={facilitiesDetails}></BookingCard>
       {/* RIGHT SIDE: Image */}
       <div className="lg:col-span-3 w-full order-1 lg:order-2 space-y-4 md:space-y-4">
-       <div className="flex justify-between items-center">
-           <h2 className="font-semibold text-2xl">
-            Name:{facilityname}
-          </h2>
-   <Link href={"/all-facilities"}> 
-  <div className="badge badge-outline badge-primary hover:bg-primary hover:text-white transition-colors duration-200 cursor-pointer">
-    Cancel
-  </div>
-</Link>
-       </div>
         {/* Image Container */}
         <div className="relative w-full aspect-[4/3] md:aspect-[16/10] overflow-hidden rounded-2xl shadow-xl border border-base-300 group"> 
           <Image 

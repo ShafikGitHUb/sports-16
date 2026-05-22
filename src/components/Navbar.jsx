@@ -1,10 +1,21 @@
+"use client"
 import Link from 'next/link';
-import React from 'react';
 import logoimg from "@/assets/sports16.png"
 import Image from 'next/image';
 import NavLink from './NavLink';
+import { authClient } from '@/lib/auth-client';
+import { Avatar, Button } from '@heroui/react';
 
 const Navbar = () => {
+    const { 
+        data: session,
+    } = authClient.useSession() 
+    const user = session?.user
+
+const handleSignout =async()=>{
+  await authClient.signOut();
+}
+
     return (
 <div className='bg-base-100 shadow-sm'>
  <div className="navbar w-11/12 mx-auto">
@@ -30,7 +41,21 @@ const Navbar = () => {
   </div>
 
   <div className="navbar-end">
- <NavLink href="/login" className="btn">Login</NavLink>
+<div className='flex gap-2'>
+{ user? <> <ul className='flex justify-between items-center gap-3'>
+  <li><Avatar>
+        <Avatar.Image referrerPolicy='no-referrerPolicy' alt="name" src={user?.image} />
+        <Avatar.Fallback>{user.name[0]}</Avatar.Fallback>
+      </Avatar></li>
+      <li>
+        <Button onClick={handleSignout} variant='danger' className={"rounded-none"}>Logout</Button>
+      </li>
+</ul>
+</>:<> 
+  <NavLink href="/login" className="btn">Login</NavLink>
+<NavLink href="/signup" className="btn">Signup</NavLink>
+</>}
+</div>
   <div className="dropdown dropdown-end md:hidden">
     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none"

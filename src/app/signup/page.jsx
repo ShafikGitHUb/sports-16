@@ -2,40 +2,48 @@
 import { authClient } from "@/lib/auth-client";
 import {Check} from "@gravity-ui/icons";
 import {Button, Card, Description, FieldError, Form, Input, Label, TextField} from "@heroui/react";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { FaGoogle } from "react-icons/fa";
 
-const LoginPage = () => {
+const SignUpPage = () => {
     const onSubmit = async(e)=>{
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const user = Object.fromEntries(formData.entries());
-        const { data, error } = await authClient.signIn.email({
+        const { data, error } = await authClient.signUp.email({
             email:user.email,
-            password:user.password
+            name:user.name,
+            password:user.password,
+            img:user.url 
     })
-
-      if(data){
-        alert("Login Succefullly");
+    if(data){
+        alert("Signup Succefullly");
         redirect("/")
     }
     if(error){
         alert("Error")
     }
     }
-    const handleGoogleSignin = async () => {
-  await authClient.signIn.social({
-    provider: "google",
-  });
-};
+        const handleGoogleSignin = async () => {
+      await authClient.signIn.social({
+        provider: "google",
+      });
+    };
     return (
         <div className="max-w-7xl  mx-auto mt-6 ">
             <div className="text-center">
-                <h1 className="text-2xl">Login</h1>
+                <h1 className="text-2xl">Create Account</h1>
             </div>
             <Card className="border p-6 w-[85%] md:w-[99%] mx-auto">
                          <Form onSubmit={onSubmit} className="flex  flex-col gap-4">
+      <TextField
+        isRequired
+        name="name"
+        type="text">
+        <Label>Name</Label>
+        <Input placeholder="Enter Your Name" />
+        <FieldError />
+      </TextField>
       <TextField
         isRequired
         name="email"
@@ -51,6 +59,13 @@ const LoginPage = () => {
         <Input placeholder="john@example.com" />
         <FieldError />
       </TextField>
+            <TextField
+        name="url"
+        type="img_url">
+        <Label>ImgUrl</Label>
+        <Input placeholder="Enter ImageUrl" />
+        <FieldError />
+      </TextField>
       <TextField
         isRequired
         minLength={6}
@@ -58,7 +73,7 @@ const LoginPage = () => {
         type="password"
         validate={(value) => {
           if (value.length < 6) {
-            return "Password must be at least 6 characters";
+            return "Password must be at least 8 characters";
           }
           if (!/[A-Z]/.test(value)) {
             return "Password must contain at least one uppercase letter";
@@ -76,28 +91,28 @@ const LoginPage = () => {
       </TextField>
  <div className="flex justify-center gap-2">
         <Button className={"w-full rounded-none bg-sky-500"} type="submit">
-          Login
+          Create Account
         </Button>
       </div>
     </Form>
-         <div className="flex flex-col gap-2 mt-1 items-center">
-                    <div className="flex items-center w-full">
-                        <hr className="w-full border-gray-300" />
-                        <span className="px-2 text-gray-500 text-sm">OR</span>
-                        <hr className="w-full border-gray-300" />
+                    <div className="flex flex-col gap-2 mt-1 items-center">
+                        <div className="flex items-center w-full">
+                            <hr className="w-full border-gray-300" />
+                            <span className="px-2 text-gray-500 text-sm">OR</span>
+                            <hr className="w-full border-gray-300" />
+                        </div>
+    
+                        <Button onClick={handleGoogleSignin} 
+                            type="button"className="w-full rounded-none bg-white border border-gray-300 text-gray-700"
+                        >
+                            <FaGoogle />
+    
+                            Login With Google
+                        </Button>
                     </div>
-                    <Button onClick={handleGoogleSignin} className="w-full rounded-none bg-white border border-gray-300 text-gray-700">
-                        <FaGoogle />Login With Google</Button>
-                    <p className="text-sm mt-2 text-gray-600">
-                        Don't have an account?
-                        <Link href="/signup" className="text-sky-500 hover:underline font-semibold">
-                            Registration
-                        </Link>
-                    </p>
-                </div>
             </Card>
         </div>
     );
 };
 
-export default LoginPage;
+export default SignUpPage;

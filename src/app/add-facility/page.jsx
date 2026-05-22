@@ -104,6 +104,12 @@ const addFacility = Object.fromEntries(formData.entries())
                 <Input placeholder="Location" className="rounded-2xl" />
                 <FieldError />
               </TextField>
+
+              
+
+              {/* price da defult set korte hobe */}
+
+
               <TextField name="price" type="number" isRequired>
                 <Label>Price Per hour (USD)</Label>
                 <Input
@@ -114,6 +120,7 @@ const addFacility = Object.fromEntries(formData.entries())
                 <FieldError />
               </TextField>
 
+{/* time fixed kore dea ucit */}
 
 <div className="md:col-span-2">
   <TextField name="time" type="time" isRequired>
