@@ -3,26 +3,43 @@ import { authClient } from '@/lib/auth-client';
 import { DateField, Description, Input, Label, TextField, TimeField } from '@heroui/react';
 import Link from 'next/link';
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 
 const BookingCard = ({facilitiesDetails}) => {
-     const {_id,facilityname,category,imageUrl,country,price,Time,description} = facilitiesDetails;
-    const [departureDate, setDepartureDate] = useState(null);
-    // ADD TIME 
+      const [departureDate, setDepartureDate] = useState(null);
     const [hours, setHours] = useState(1);
+   // DATA LOAD CHECK
+  // if (!facilitiesDetails) {
+  //   return <p>Loading...</p>;
+  // }
+     const {_id,facilityname,category,imageUrl,country,price,Time,description} = facilitiesDetails;
     const {data: session} = authClient.useSession();
     const user = session?.user;
     // console.log(user);
  const handleBooking = async()=>{
   const totalPrice = price * hours;
      const bookingInformation = {
-         userId: user.id,
-    userName: user.name,
+         userId: user?.id,
+    userName: user?.name,
     facilityId: _id,
     departureDate: new Date(departureDate),
     hours,
-    totalPrice: price * hours,
+    totalPrice:totalPrice
     }
- }
+
+    const res = await fetch("http://localhost:5000/booking", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(bookingInformation)
+  });
+
+  const data = await res.json();
+  toast.success('Booking Succefully')
+};
+
+ 
     return (
        <div className="lg:col-span-2 w-full order-2 lg:order-1 flex justify-center lg:justify-start">
         <div className="card bg-base-100 w-full max-w-md shrink-0 shadow-xl border border-base-300">

@@ -1,10 +1,11 @@
 import AllFacilitiesCard from "@/components/AllFacilitiesCard";
-import Image from "next/image";
+import HeroSlider from "@/components/HeroSlider";
+
 
 export default function Home() {
   return (
     <div>
-      
+      <HeroSlider></HeroSlider>
     </div>
   );
 }
