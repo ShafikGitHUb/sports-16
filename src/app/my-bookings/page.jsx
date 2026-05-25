@@ -1,6 +1,8 @@
 import { auth } from '@/lib/auth';
+import { TrashBin } from '@gravity-ui/icons';
+import { Button } from '@heroui/react';
 import { headers } from 'next/headers';
-import React from 'react';
+import Image from 'next/image';
 
 const MybookingsPage = async() => {
     const session = await auth.api.getSession({
@@ -8,12 +10,52 @@ const MybookingsPage = async() => {
 })
 const user = session?.user;
 const res = await fetch(`http://localhost:5000/booking/${user?.id}`);
-const data = await res.json();
+const Bookings = await res.json();
+console.log(Bookings);
     return (
-        <div className='w-11/12 mx-auto'>
+        <div className='w-11/12 mx-auto pb-10 md:pb-16'>
             <h1 className='text-2xl font-semibold text-center my-4'>My Booking</h1>
+<div className="space-y-5">
+  {Bookings.map((booking) => (
+    <div
+      key={booking._id}
+      className="flex flex-col md:flex-row gap-4 border p-4 md:p-5 items-start md:items-center rounded"
+    >
+      <div className="w-full md:w-[120px] h-[180px] md:h-[100px] relative shrink-0">
+        <Image
+          src={booking.imageUrl}
+          alt="facility"
+          fill
+          className="object-cover rounded"
+        />
+      </div>
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center w-full gap-3 md:gap-0">
+        
+        <div className="space-y-1">
+          <h1 className="font-semibold text-lg md:text-xl">
+            {booking.userName}
+          </h1>
 
-            
+          <p className="text-sm md:text-base">
+            {new Date(booking.departureDate).toLocaleDateString("en-BD")}
+          </p>
+
+          <p className="font-semibold text-lg md:text-xl text-cyan-500">
+            Total Price: ${booking.totalPrice}
+          </p>
+        </div>
+
+        <Button
+          className="rounded-md md:rounded-none border border-red-500 text-red-500 w-full md:w-auto mt-3 md:mt-0"
+          variant="outline"
+        >
+          <TrashBin />
+          Cancel
+        </Button>
+      </div>
+    </div>
+  ))}
+</div>       
         </div>
     );
 };

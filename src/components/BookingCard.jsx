@@ -24,9 +24,10 @@ const BookingCard = ({facilitiesDetails}) => {
     facilityId: _id,
     departureDate: new Date(departureDate),
     hours,
-    totalPrice:totalPrice
+    totalPrice:totalPrice,
+    image:user?.image,
+    imageUrl
     }
-
     const res = await fetch("http://localhost:5000/booking", {
     method: "POST",
     headers: {
