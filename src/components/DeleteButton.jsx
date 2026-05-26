@@ -1,7 +1,7 @@
 "use client";
 import { TrashBin } from "@gravity-ui/icons";
 import {AlertDialog, Button} from "@heroui/react";
-const CancelButton = ({bookingId}) => {
+const DeleteButton = ({bookingId}) => {
     const handleCancelBooing = async()=>{
         const res = await fetch(`http://localhost:5000/booking/${bookingId}`,{
             method:"DELETE",
@@ -22,7 +22,7 @@ const CancelButton = ({bookingId}) => {
     variant="outline"
   >
     <TrashBin />
-    Cancel
+    Delete
   </Button>
       <AlertDialog.Backdrop>
         <AlertDialog.Container>
@@ -30,18 +30,18 @@ const CancelButton = ({bookingId}) => {
             <AlertDialog.CloseTrigger />
             <AlertDialog.Header>
               <AlertDialog.Icon status="danger" />
-              <AlertDialog.Heading>Cancle permanently?</AlertDialog.Heading>
+              <AlertDialog.Heading>Delete permanently?</AlertDialog.Heading>
             </AlertDialog.Header>
             <AlertDialog.Body>
               <p>
-                This will permanently Cancle</p>
+                This will permanently delete</p>
             </AlertDialog.Body>
             <AlertDialog.Footer>
               <Button slot="close" variant="tertiary">
                 Cancel
               </Button>
               <Button onClick={handleCancelBooing} slot="close" variant="danger">
-            Confirm Cancle
+             confirm delete
               </Button>
             </AlertDialog.Footer>
           </AlertDialog.Dialog>
@@ -51,4 +51,4 @@ const CancelButton = ({bookingId}) => {
     );
 };
 
-export default CancelButton;
+export default DeleteButton;

@@ -1,4 +1,4 @@
-import CancelButton from "@/components/CancelButton";
+import DeleteButton from "@/components/DeleteButton";
 import { auth } from "@/lib/auth";
 import { TrashBin } from "@gravity-ui/icons";
 import { Button } from "@heroui/react";
@@ -62,15 +62,7 @@ const ManageFacility = async () => {
 
                   <td className="p-4">
                     <div className="flex gap-2 justify-center">
-
-                      <Button
-                        className="border border-blue-500 text-blue-500"
-                        variant="outline"
-                      >
-                        Update
-                      </Button>
-
-       <CancelButton bookingId={booking._id}></CancelButton>
+       <DeleteButton bookingId={booking._id}></DeleteButton>
 
                     </div>
                   </td>
@@ -107,13 +99,6 @@ const ManageFacility = async () => {
               </p>
 
               <div className="flex gap-2 mt-3">
-                <Button
-                  className="border border-blue-500 text-blue-500 w-full"
-                  variant="outline"
-                >
-                  Update
-                </Button>
-
                 <Button
                   className="border border-red-500 text-red-500 w-full"
                   variant="outline"

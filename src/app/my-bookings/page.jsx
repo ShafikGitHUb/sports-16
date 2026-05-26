@@ -51,8 +51,7 @@ const Bookings = await res.json();
     
 <div className="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-4">
 
-  <Button
-    className="rounded-md border border-green-500 text-green-600 w-full md:w-auto cursor-default"
+  <Button className="rounded-md border border-green-500 text-green-600 w-full md:w-auto cursor-default"
     variant="outline"
     disabled
   >
