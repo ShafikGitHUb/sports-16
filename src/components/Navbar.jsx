@@ -30,7 +30,7 @@ const handleSignout =async()=>{
   </Link>
 
   </div>
-  <div className="navbar-center hidden md:flex">
+  <div className="navbar-center hidden lg:flex">
    <ul className="flex justify-center items-center gap-6 font-heading">
      <NavLink href="/">Home</NavLink>
             <NavLink href="/all-facilities">All Facilities</NavLink>
@@ -41,8 +41,8 @@ const handleSignout =async()=>{
   </div>
 
   <div className="navbar-end">
-<div className='flex gap-2'>
-{ user? <> <ul className='flex justify-between items-center gap-3'>
+<div className='flex items-center gap-5 md:gap-7'>
+{ user? <> <ul className='flex items-center gap-5 md:gap-6'>
   <li><Avatar>
         <Avatar.Image referrerPolicy='no-referrerPolicy' alt="name" src={user?.image} />
         <Avatar.Fallback>{user.name[0]}</Avatar.Fallback>
@@ -56,7 +56,7 @@ const handleSignout =async()=>{
 <NavLink href="/signup" className="btn">Signup</NavLink>
 </>}
 </div>
-  <div className="dropdown dropdown-end md:hidden">
+  <div className="dropdown dropdown-end lg:hidden">
     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none"
         viewBox="0 0 24 24" stroke="currentColor">

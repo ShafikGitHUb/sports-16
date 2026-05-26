@@ -1,191 +1,163 @@
-"use client"
-import { Button, FieldError, Input, Label, ListBox, TextArea, TextField,Select, Card } from '@heroui/react';
-import React from 'react';
+"use client";
+
+import React from "react";
+import {
+  Button,
+  FieldError,
+  Input,
+  Label,
+  TextArea,
+  TextField,
+  Card,
+} from "@heroui/react";
 
 const AddfacilityPage = () => {
+  const onSubmit = async (e) => {
+    e.preventDefault();
 
-  //onsumbit form
-const onSubmit =async(e)=>{
-e.preventDefault()
-const formData = new FormData(e.currentTarget)
-const addFacility = Object.fromEntries(formData.entries())
-const pricePerHour = Number(addFacility.price);
+    const formData = new FormData(e.currentTarget);
+    const addFacility = Object.fromEntries(formData.entries());
 
-// time
-const startTime = addFacility.startTime;
-const endTime = addFacility.endTime;
+    const pricePerHour = Number(addFacility.price);
 
-if (new Date(`1970-01-01T${endTime}`) <= new Date(`1970-01-01T${startTime}`)) {
-  alert("End time must be greater than start time");
-  return;
-}
+    const startTime = addFacility.startTime;
+    const endTime = addFacility.endTime;
 
-const facilityData = {
-  ...addFacility,
-  pricePerHour,
-  startTime,
-  endTime,
-};
+    if (
+      new Date(`1970-01-01T${endTime}`) <=
+      new Date(`1970-01-01T${startTime}`)
+    ) {
+      alert("End time must be greater than start time");
+      return;
+    }
 
-//data fetch with link post method add facility
- const res = await fetch("http://localhost:5000/add-facility", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    // body: JSON.stringify(addFacility),
-    body: JSON.stringify(facilityData)
-  });
+    const facilityData = {
+      ...addFacility,
+      pricePerHour,
+      startTime,
+      endTime,
+    };
 
-  const data = await res.json();
-};
+    const res = await fetch("http://localhost:5000/add-facility", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(facilityData),
+    });
 
-    return (
-         <div className='p-5 max-w-7xl mx-auto'>
-            <Card className=''>
-                   <h1 className='text-2xl font-semibold text-center border-b w-max mx-auto'>Add Facilities</h1>
-                  <form onSubmit={onSubmit} 
-            className="p-10 space-y-8 md:w-3xl mx-auto"
-          >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-             
-              <div className="md:col-span-2">
-                <TextField name="facilityname" isRequired>
-                  <Label>Facility Name</Label>
-                  <Input placeholder="Facility Name" className="rounded-2xl" />
-                  <FieldError />
-                </TextField>
-              </div>
-              <div className="md:col-span-2">
-  <Select
-    name="category"
-    isRequired
-    className="w-full"
-    placeholder="Select category"
-  >
-    <Label className="mb-2 block">Facility Type</Label>
+    const data = await res.json();
+  };
 
-    <Select.Trigger className="w-full rounded-2xl border px-4 py-3">
-      <Select.Value />
-      <Select.Indicator />
-    </Select.Trigger>
+  return (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+      
+      <Card className="w-full max-w-4xl mx-auto p-5 md:p-10 shadow-lg rounded-2xl">
 
-    <Select.Popover className="">
-      <ListBox className="w-full">
+        <h1 className="text-2xl md:text-3xl font-bold text-center text-cyan-600 border-b pb-4 mb-6">
+          Add New Facility
+        </h1>
 
-        <ListBox.Item id="Football" textValue="Football">
-          Football
-          <ListBox.ItemIndicator />
-        </ListBox.Item>
+        <form onSubmit={onSubmit} className="space-y-6">
 
-        <ListBox.Item id="Gym" textValue="Gym">
-          Gym
-          <ListBox.ItemIndicator />
-        </ListBox.Item>
+          <TextField name="facilityname" isRequired>
+            <Label>Facility Name</Label>
+            <Input
+              placeholder="Enter facility name"
+              className="rounded-xl"
+            />
+            <FieldError />
+          </TextField>
 
-        <ListBox.Item id="Swimming" textValue="Swimming">
-          Swimming
-          <ListBox.ItemIndicator />
-        </ListBox.Item>
+          <div>
+            <label className="block mb-2 font-semibold text-gray-700">
+              Facility Type
+            </label>
 
-        <ListBox.Item id="Cricket" textValue="Cricket">
-          Cricket
-          <ListBox.ItemIndicator />
-        </ListBox.Item>
-
-        <ListBox.Item id="Badminton" textValue="Badminton">
-          Badminton
-          <ListBox.ItemIndicator />
-        </ListBox.Item>
-        <ListBox.Item id="Tenis" textValue="Tenis">
-          Tenis
-          <ListBox.ItemIndicator />
-        </ListBox.Item>
-
-      </ListBox>
-    </Select.Popover>
-  </Select>
-</div>
-              <div className="md:col-span-2">
-                <TextField name="imageUrl" isRequired>
-                  <Label>Image URL</Label>
-                  <Input
-                    type="url"
-                    placeholder="https://example.com/bali-paradise.jpg"
-                    className="rounded-2xl"
-                  />
-                  <FieldError />
-                </TextField>
-              </div>
-             
-              <TextField name="country" isRequired>
-                <Label>Location</Label>
-                <Input placeholder="Location" className="rounded-2xl" />
-                <FieldError />
-              </TextField>
-
-              <TextField name="price" type="number" isRequired>
-                <Label>Price Per hour (USD)</Label>
-                <Input
-                  type="number"
-                  placeholder="$"
-                  className="rounded-2xl"
-                />
-                <FieldError />
-              </TextField>
-
-<div className="md:col-span-2">
-  {/* <TextField name="time" type="time" isRequired>
-    <Label>Available Time</Label>
-    <Input
-      type="time"
-      className="rounded-2xl"
-    />
-
-    <FieldError />
-  </TextField> */}
-   <TextField name="startTime" isRequired>
-    <Label>Start Time</Label>
-    <Input
-      type="time"
-      className="rounded-2xl"
-    />
-    <FieldError />
-  </TextField>
-
-  <TextField name="endTime" isRequired>
-    <Label>End Time</Label>
-    <Input
-      type="time"
-      className="rounded-2xl"
-    />
-    <FieldError />
-  </TextField>
-</div>
-
-              <div className="md:col-span-2">
-                <TextField name="description" isRequired>
-                  <Label>Description</Label>
-                  <TextArea
-                    placeholder="Describe..."
-                    className="rounded-3xl"
-                  />
-                  <FieldError />
-                </TextField>
-              </div>
-            </div>
-
-            <Button
-              type="submit"
-              variant="outline"
-              className=" rounded-none w-full bg-cyan-500 text-white"
+            <select
+              name="category"
+              className="select select-bordered w-full rounded-xl h-12"
+              defaultValue=""
+              required
             >
-              Add Facility
-            </Button>
-          </form>
-            </Card> 
-        </div>
-    );
+              <option value="" disabled>
+                Select category
+              </option>
+              <option value="Football">Football</option>
+              <option value="Gym">Gym</option>
+              <option value="Swimming">Swimming</option>
+              <option value="Cricket">Cricket</option>
+              <option value="Badminton">Badminton</option>
+              <option value="Tennis">Tennis</option>
+            </select>
+          </div>
+
+          <TextField name="imageUrl" isRequired>
+            <Label>Image URL</Label>
+            <Input
+              type="url"
+              placeholder="https://example.com/image.jpg"
+              className="rounded-xl"
+            />
+            <FieldError />
+          </TextField>
+          <TextField name="country" isRequired>
+            <Label>Location</Label>
+            <Input
+              placeholder="Enter location"
+              className="rounded-xl"
+            />
+            <FieldError />
+          </TextField>
+          <TextField name="price" type="number" isRequired>
+            <Label>Price Per Hour</Label>
+            <Input
+              type="number"
+              placeholder="$"
+              className="rounded-xl"
+            />
+            <FieldError />
+          </TextField>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+            <TextField name="startTime" isRequired>
+              <Label>Start Time</Label>
+              <Input
+                type="time"
+                className="rounded-xl"
+              />
+              <FieldError />
+            </TextField>
+
+            <TextField name="endTime" isRequired>
+              <Label>End Time</Label>
+              <Input
+                type="time"
+                className="rounded-xl"
+              />
+              <FieldError />
+            </TextField>
+
+          </div>
+          <TextField name="description" isRequired>
+            <Label>Description</Label>
+            <TextArea
+              placeholder="Write description..."
+              className="rounded-xl min-h-[120px]"
+            />
+            <FieldError />
+          </TextField>
+          <Button
+            type="submit"
+            className="w-full bg-cyan-500 text-white font-semibold py-3 rounded-xl hover:bg-cyan-600 transition"
+          >
+            Add Facility
+          </Button>
+
+        </form>
+      </Card>
+    </div>
+  );
 };
 
 export default AddfacilityPage;

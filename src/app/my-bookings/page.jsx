@@ -1,3 +1,4 @@
+import CancelButton from '@/components/CancelButton';
 import { auth } from '@/lib/auth';
 import { TrashBin } from '@gravity-ui/icons';
 import { Button } from '@heroui/react';
@@ -11,10 +12,9 @@ const MybookingsPage = async() => {
 const user = session?.user;
 const res = await fetch(`http://localhost:5000/booking/${user?.id}`);
 const Bookings = await res.json();
-console.log(Bookings);
     return (
         <div className='w-11/12 mx-auto pb-10 md:pb-16'>
-            <h1 className='text-2xl font-semibold text-center my-4'>My Booking</h1>
+            <h1 className='text-2xl md:text-3xl font-bold text-center text-cyan-600 border-b pb-4 mb-6 pt-4'>My Booking</h1>
 <div className="space-y-5">
   {Bookings.map((booking) => (
     <div
@@ -30,28 +30,37 @@ console.log(Bookings);
         />
       </div>
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center w-full gap-3 md:gap-0">
-        
         <div className="space-y-1">
-          <h1 className="font-semibold text-lg md:text-xl">
-            {booking.userName}
-          </h1>
+  <h1 className="font-semibold text-lg md:text-xl">
+    Category:{" "}
+    <span className="text-gray-600">{booking.category}</span>
+  </h1>
 
-          <p className="text-sm md:text-base">
-            {new Date(booking.departureDate).toLocaleDateString("en-BD")}
-          </p>
+  <p className="text-sm md:text-base text-gray-500">
+    Booking Date:{" "}
+    <span className="text-gray-700">
+      {new Date(booking.departureDate).toLocaleDateString("en-BD")}
+    </span>
+  </p>
 
-          <p className="font-semibold text-lg md:text-xl text-cyan-500">
-            Total Price: ${booking.totalPrice}
-          </p>
-        </div>
+  <p className="font-semibold text-lg md:text-xl">
+    Total Price:{" "}
+    <span className="text-cyan-600">${booking.totalPrice}</span>
+  </p>
+</div>
+    
+<div className="flex flex-col md:flex-row items-start md:items-center gap-3 md:gap-4">
 
-        <Button
-          className="rounded-md md:rounded-none border border-red-500 text-red-500 w-full md:w-auto mt-3 md:mt-0"
-          variant="outline"
-        >
-          <TrashBin />
-          Cancel
-        </Button>
+  <Button
+    className="rounded-md border border-green-500 text-green-600 w-full md:w-auto cursor-default"
+    variant="outline"
+    disabled
+  >
+    Booking Confirmed
+  </Button>
+  <CancelButton bookingId={booking._id}></CancelButton>
+
+</div>
       </div>
     </div>
   ))}
