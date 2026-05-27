@@ -9,8 +9,18 @@ const MybookingsPage = async() => {
     const session = await auth.api.getSession({
     headers: await headers() 
 })
+  const {token} = await auth.api.getToken({
+      headers: await headers()
+    })
 const user = session?.user;
-const res = await fetch(`http://localhost:5000/booking/${user?.id}`);
+
+const res = await fetch(`http://localhost:5000/booking/${user?.id}`,
+    {
+      headers:{
+        authorization:`Bearer ${token}`
+      }
+    }
+);
 const Bookings = await res.json();
     return (
         <div className='w-11/12 mx-auto pb-10 md:pb-16'>

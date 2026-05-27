@@ -10,6 +10,7 @@ import {
   TextField,
   Card,
 } from "@heroui/react";
+import { authClient } from "@/lib/auth-client";
 
 const AddfacilityPage = () => {
   const onSubmit = async (e) => {
@@ -38,10 +39,13 @@ const AddfacilityPage = () => {
       endTime,
     };
 
+    const {data:tokenData} = await authClient.token()
+
     const res = await fetch("http://localhost:5000/add-facility", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        authorization:`Bearer ${tokenData?.token}`
       },
       body: JSON.stringify(facilityData),
     });

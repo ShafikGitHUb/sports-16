@@ -1,10 +1,21 @@
 import BookingCard from "@/components/BookingCard";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 
 const AllFacilitesDetails = async({params}) => {
     const {id} = await params;
-    const res = await fetch(`http://localhost:5000/all-facilities/${id}`)
+    const {token} = await auth.api.getToken({
+      headers: await headers()
+    })
+    const res = await fetch(`http://localhost:5000/all-facilities/${id}`,
+      {
+      headers:{
+        authorization:`Bearer ${token}`
+      }
+    }
+  );
     const facilitiesDetails = await res.json();
   const {_id,facilityname,category,imageUrl,country,price,Time,description} = facilitiesDetails;
 return (
