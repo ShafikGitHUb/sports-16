@@ -14,8 +14,9 @@ const Navbar = () => {
     const user = session?.user
 
 const handleSignout =async()=>{
+  toast.success("Logout Successfully");
   await authClient.signOut();
-   toast.success("Logout Successfully");
+   
 }
 
     return (
