@@ -3,8 +3,6 @@ import getAddFacility from '@/lib/getAddFacility';
 import React from 'react';
 
 const AllfacilitesPage = async() => {
-    // const res = await fetch("http://localhost:5000/all-facilities")
-    // const allFacilities = await res.json()
      const allFacilities = await getAddFacility();
     return (
         <div className='w-11/12 mx-auto'>

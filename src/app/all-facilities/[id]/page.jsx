@@ -9,7 +9,7 @@ const AllFacilitesDetails = async({params}) => {
     const {token} = await auth.api.getToken({
       headers: await headers()
     })
-    const res = await fetch(`http://localhost:5000/all-facilities/${id}`,
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/all-facilities/${id}`,
       {
       headers:{
         authorization:`Bearer ${token}`

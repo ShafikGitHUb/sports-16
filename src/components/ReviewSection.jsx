@@ -1,5 +1,5 @@
 export default async function ReviewSection() {
-  const res = await fetch("http://localhost:5000/reviews");
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/reviews`);
   const reviews = await res.json();
   return (
     <div className="w-full bg-emerald-50/20 py-12 px-4 md:px-8">
