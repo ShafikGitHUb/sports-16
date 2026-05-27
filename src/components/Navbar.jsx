@@ -5,6 +5,7 @@ import Image from 'next/image';
 import NavLink from './NavLink';
 import { authClient } from '@/lib/auth-client';
 import { Avatar, Button } from '@heroui/react';
+import toast from 'react-hot-toast';
 
 const Navbar = () => {
     const { 
@@ -14,6 +15,7 @@ const Navbar = () => {
 
 const handleSignout =async()=>{
   await authClient.signOut();
+   toast.success("Logout Successfully");
 }
 
     return (

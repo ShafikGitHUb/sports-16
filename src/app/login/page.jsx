@@ -4,6 +4,7 @@ import {Check} from "@gravity-ui/icons";
 import {Button, Card, Description, FieldError, Form, Input, Label, TextField} from "@heroui/react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import toast from "react-hot-toast";
 import { FaGoogle } from "react-icons/fa";
 
 const LoginPage = () => {
@@ -17,11 +18,11 @@ const LoginPage = () => {
     })
 
       if(data){
-        alert("Login Succefullly");
+       toast.success('Successfully created!');
         redirect("/")
     }
     if(error){
-        alert("Error")
+        toast.error('error');
     }
     }
     const handleGoogleSignin = async () => {
